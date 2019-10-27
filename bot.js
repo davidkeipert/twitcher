@@ -3,10 +3,13 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require("./config.json");
-const fetch = require("node-fetch")
+const fetch = require("node-fetch");
+const http = require('http');
 
 client.on('ready', () => {
     console.log(`Bot started, ${client.users.size} users, active in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
+
+
 });
 
 client.on('guildCreate', guild => {
@@ -40,7 +43,31 @@ client.on('message', async message => {
         var twitchUser = args[0];
         var userID = getUserID(twitchUser);
 
-        
+        var url = 'https://api.twitch.tv/helix/webhooks/hub';
+        const data = {
+            'hub.callback': 'https://dk-domain.appspot.com/',
+            'hub.mode': 'subscribe',
+            'hub.topic': 'https://api.twitch.tv/helix/users/follows?first=1&to_id=416145352', //temporarily hardcoded user ID
+            'hub.lease_seconds': '864000',
+            'hub.secret': 'test'
+        }
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+
+            headers: {
+                'client-ID': config.twitchClientID,
+            }
+        })
+
+        var server = http.createServer((request, result) => {
+            if(request.method === "GET") {
+                
+            }
+        })
+
+
     }
     
 
