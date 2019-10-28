@@ -1,15 +1,16 @@
 {
-    "name": "Example",
-    "description": "Example",
-    "version": "0.0.0",
-    "main": "bot.js",
-    "scripts": {
-        "start": "node bot.js"
-    },
-    "dependencies": {
-        "discord.js": "^11.5.1",
-        "node-fetch": "^2.6.0",
-        "request": "^2.88.0",
-        "twitch-webhook": "^1.2.4"
-    }
+  "name": "Example",
+  "description": "Example",
+  "version": "0.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "request": "^2.88.0",
+    "twitch-webhook": "^1.2.4"
+  }
 }
