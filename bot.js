@@ -62,7 +62,7 @@ client.on('message', async message => {
         const data = {
             'hub.callback': 'http://51.158.177.181/',
             'hub.mode': 'subscribe',
-            'hub.topic': 'https://api.twitch.tv/helix/users/follows?first=1&to_id=416145352', //temporarily hardcoded user ID
+            'hub.topic': `https://api.twitch.tv/helix/users/follows?first=1&to_id=${userID}`,
             'hub.lease_seconds': '864000',
             'hub.secret': 'test'
         }
@@ -77,9 +77,11 @@ client.on('message', async message => {
         })
 
         server.post('/', (req, res) => {
-            console.log('webhook notification received');
+            console.log('Webhook notification received');
             res.sendStatus(200);
 
+            console.log(req);
+            
             client.channels.find("name","twitch-alerts").send("new follow detected")
 
         })
