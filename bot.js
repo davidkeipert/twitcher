@@ -61,7 +61,6 @@ client.on("message", async message => {
     var userID = getUserID(twitchUser);
     channels.push(twitchUser);
 
-
   }
 
   if (command === "unsub") {
@@ -108,7 +107,7 @@ async function subscribeWebHook(channel) {
   var userID = await getUserID(channel);
 
   var topic = "https://api.twitch.tv/helix/users/follows?first=1&to_id=" + userID;
-  var streamStatus2 = "https://api.twitch.tv/helix/streams?user_id=" + userID;
+  var live = "https://api.twitch.tv/helix/streams?user_id=" + userID;
 
   var url = "https://api.twitch.tv/helix/webhooks/hub";
   console.log(topic)
