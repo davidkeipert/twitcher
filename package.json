@@ -1,7 +1,7 @@
 {
-  "name": "Example",
-  "description": "Example",
-  "version": "0.0.0",
+  "name": "Twitcher",
+  "description": "Discord bot that send notifications when Twitch channels go live.",
+  "version": "0.1.0",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
@@ -10,7 +10,6 @@
     "discord.js": "^11.5.1",
     "express": "^4.17.1",
     "node-fetch": "^2.6.0",
-    "request": "^2.88.0",
-    "twitch-webhook": "^1.2.4"
+    "request": "^2.88.0"
   }
 }
