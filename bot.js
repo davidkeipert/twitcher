@@ -6,10 +6,9 @@ const express = require("express");
 const http = require("http");
 
 const server = express();
-var serverController;
-const ip;
+const ip = config.ipAddress;
 
-var channels = ["alyska", "jessie_k_"];
+var channels = config.channels;
 
 client.on("ready", () => {
   console.log(
@@ -17,8 +16,6 @@ client.on("ready", () => {
   );
 
   startServers();
-
-
 
 });
 
@@ -143,6 +140,7 @@ function startServers() {
 
   server.get("/", (req, res) => {
     console.log("received get request")
+    console.log(req.query)
     var challenge = req.query["hub.challenge"];
     console.log("challenge recieved: " + challenge);
     res.send(challenge);
@@ -195,10 +193,10 @@ async function unsubscribe() {
 
     //preparing to switch webhook type to stream status
     var topic = "https://api.twitch.tv/helix/users/follows?first=1&to_id=" + userID;
-    var live = "https://api.twitch.tv/helix/streams?user_id=" +userID;
+    var live = "https://api.twitch.tv/helix/streams?user_id=" + userID;
 
     var url = "https://api.twitch.tv/helix/webhooks/hub";
-    console.log(topic)
+    console.log(live)
     const data = {
       "hub.callback": "http://" + ip + "/",
       "hub.mode": "unsubscribe",
@@ -231,7 +229,7 @@ async function unsubscribe() {
     console.log("sending post request")
     var responseData = await fetch(url, {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(data2),
 
       headers: {
         "client-ID": config.twitchClientID,
@@ -250,7 +248,7 @@ process.on('SIGINT', async () => {
   const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   console.log('Bot is shutting down...');
-  await snooze(2000);
+  await snooze(3000);
   console.log('bye!');
 
   process.exit(0);
