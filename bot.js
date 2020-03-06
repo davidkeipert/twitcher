@@ -106,3 +106,7 @@ function getUserID(userName) {
         return (response.data[0].id);
     })
 }
+
+function getExternalIp() {
+    
+}
