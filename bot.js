@@ -7,6 +7,7 @@ const http = require("http");
 
 const server = express();
 var serverController;
+const ip;
 
 var channels = ["alyska", "jessie_k_"];
 
@@ -112,9 +113,9 @@ async function subscribeWebHook(channel) {
   var url = "https://api.twitch.tv/helix/webhooks/hub";
   console.log(topic)
   const data = {
-    "hub.callback": "http://51.158.177.181/",
+    "hub.callback": "http://" + ip + "/",
     "hub.mode": "subscribe",
-    "hub.topic": topic,
+    "hub.topic": live,
     "hub.lease_seconds": "864000",
     "hub.secret": "test"
   };
@@ -189,12 +190,33 @@ async function unsubscribe() {
 
     //preparing to switch webhook type to stream status
     var topic = "https://api.twitch.tv/helix/users/follows?first=1&to_id=" + userID;
-    var streamStatus = "https://api.twitch.tv/helix/streams?user_id=" +userID;
+    var live = "https://api.twitch.tv/helix/streams?user_id=" +userID;
 
     var url = "https://api.twitch.tv/helix/webhooks/hub";
     console.log(topic)
     const data = {
-      "hub.callback": "http://51.158.177.181/",
+      "hub.callback": "http://" + ip + "/",
+      "hub.mode": "unsubscribe",
+      "hub.topic": live,
+      "hub.lease_seconds": "864000",
+      "hub.secret": "test"
+    };
+
+    console.log("sending post request")
+    var responseData = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+
+      headers: {
+        "client-ID": config.twitchClientID,
+        "Content-Type": "application/json"
+      }
+    })
+
+    var url = "https://api.twitch.tv/helix/webhooks/hub";
+    console.log(topic)
+    const data = {
+      "hub.callback": "http://" + ip + "/",
       "hub.mode": "unsubscribe",
       "hub.topic": topic,
       "hub.lease_seconds": "864000",
