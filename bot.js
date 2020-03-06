@@ -3,13 +3,15 @@ const client = new Discord.Client();
 const config = require("./config.json");
 const fetch = require("node-fetch");
 const express = require('express');
-const http = require('http')
+const getIP = require('external-ip')();
+
+var ip;
 
 
 client.on('ready', () => {
     console.log(`Bot started, ${client.users.size} users, active in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
 
-
+    getExternalIp();
 });
 
 client.on('guildCreate', guild => {
@@ -52,15 +54,16 @@ client.on('message', async message => {
             console.log(challenge)
             res.send(challenge);
             console.log('response sent')
-        }).listen(80, () => console.log('Server listening on port 80'));
+        }).listen(80, () => console.log('Server listening on port 90'));
 
         //POST the subscription request
         console.log('fetching')
+        console.log('host ip address: ' + ip)
 
 
         var url = 'https://api.twitch.tv/helix/webhooks/hub';
         const data = {
-            'hub.callback': 'http://51.158.177.181/',
+            'hub.callback': `${ip}`,
             'hub.mode': 'subscribe',
             'hub.topic': `https://api.twitch.tv/helix/users/follows?first=1&to_id=${userID}`,
             'hub.lease_seconds': '864000',
@@ -108,5 +111,10 @@ function getUserID(userName) {
 }
 
 function getExternalIp() {
-    
+    getIP((err, ipAdd) => {
+         if (err) {
+             throw err;
+         }
+         ip = ipAdd;
+    });
 }
