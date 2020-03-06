@@ -215,7 +215,7 @@ async function unsubscribe() {
 
     var url = "https://api.twitch.tv/helix/webhooks/hub";
     console.log(topic)
-    const data = {
+    const data2 = {
       "hub.callback": "http://" + ip + "/",
       "hub.mode": "unsubscribe",
       "hub.topic": topic,
