@@ -165,7 +165,12 @@ function startServers() {
       client.channels.find("name", "twitch-alerts").send(follower + " just followed " + channel + " on Twitch!!")
     }
 
-    
+    if(link.search("streams") !== -1 && req.body.data.length > 0) {
+      var channel = req.body.data[0].user_name;
+      var follower = req.body.data[0].from_name;
+
+      client.channels.find("name", "twitch-alerts").send(channel + " just started streaming on Twitch!!")
+    }    
 
 
   }).listen(80, () => initWebhooks());
